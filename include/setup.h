@@ -3,8 +3,8 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#include<glad/glad.h>
-#include<GLFW/glfw3.h>
+#include"main.h"
+
 
 namespace jule {
 extern GLint window_x_coord;
@@ -21,6 +21,13 @@ int init_all();
 
 //callbacks
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
+struct setup{
+    setup(){
+        init_all();
+    }
+
+};
 
 }//namespace jule
 

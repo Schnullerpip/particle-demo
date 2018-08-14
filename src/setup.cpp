@@ -1,5 +1,9 @@
 #include"setup.h"
 
+namespace {
+    jule::setup setup;
+}
+
 namespace jule{
 GLint window_x_coord = 0;
 GLint window_y_coord = 0;
@@ -33,7 +37,7 @@ int init_all()
 
     glViewport(jule::window_x_coord, jule::window_y_coord, jule::window_width, jule::window_height);
 
-    glfwSetFramebufferSizeCallback(jule::window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(jule::window, jule::framebuffer_size_callback);
 
     return 0;
 }

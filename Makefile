@@ -9,10 +9,10 @@ ccflags=-std=c++17 -Wall
 target=particles-demo
 
 %.o: %.cpp
-	cc -c $< $(idir) $(ccflags) -o $@
+	g++ -c $< $(idir) $(ccflags) -o $@
 
 all: $(obj)
-	cc $(obj) $(LDFLAGS) -o $(target) $(ccflags); tree
+	g++ $(obj) $(LDFLAGS) -o $(target) $(ccflags) && tree
 
 .PHONY: clean
 
