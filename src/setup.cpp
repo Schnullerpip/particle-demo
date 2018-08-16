@@ -35,6 +35,7 @@ int init_all()
         return -1;
     }
 
+    glEnable(GL_DEPTH_TEST);
     glViewport(jule::window_x_coord, jule::window_y_coord, jule::window_width, jule::window_height);
 
     glfwSetFramebufferSizeCallback(jule::window, jule::framebuffer_size_callback);

@@ -7,13 +7,6 @@
 
 
 namespace jule {
-extern GLint window_x_coord;
-extern GLint window_y_coord;
-extern GLsizei window_width;
-extern GLsizei window_height;
-extern GLFWwindow *window;
-
-
 /*
 will initialize all the gl stuff i dont want to see in the relevant code
 */
@@ -26,7 +19,6 @@ struct setup{
     setup(){
         init_all();
     }
-
 };
 
 }//namespace jule

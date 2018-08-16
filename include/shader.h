@@ -2,6 +2,7 @@
 #define jule_SHADER_H
 
 #include"main.h"
+#include"texture.h"
 
 #include <string>
 #include <fstream>
@@ -44,48 +45,29 @@ public:
         {
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
         }
-
-
-        int success;
-        char infoLog[512];
-
-        unsigned int vertex_shader;
-        vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-        const GLchar *vertex_shader_source = "#version 330 core\nlayout (location = 0) in vec3 aPos;\nvoid main()\n{ gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n}";
-        glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
-        glCompileShader(vertex_shader);
-        glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
-        if(!success)
-        {
-            glGetShaderInfoLog(vertex_shader, 512, NULL, infoLog);
-            printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED %s\n", infoLog);
-        }
-
-        unsigned int fragment_shader;
-        fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-        const GLchar *fragment_shader_source = "#version 330 core \nout vec4 fragColor;\nvoid main()\n{ fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n}";
-        glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
-        glCompileShader(fragment_shader);
-        glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
-        if(!success)
-        {
-            glGetShaderInfoLog(fragment_shader, 512, NULL, infoLog);
-            printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED %s\n", infoLog);
-        }
-
+        const char* vShaderCode = vertexCode.c_str();
+        const char * fShaderCode = fragmentCode.c_str();
+        // 2. compile shaders
+        unsigned int vertex, fragment;
+        // vertex shader
+        vertex = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertex, 1, &vShaderCode, NULL);
+        glCompileShader(vertex);
+        checkCompileErrors(vertex, "VERTEX");
+        // fragment Shader
+        fragment = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragment, 1, &fShaderCode, NULL);
+        glCompileShader(fragment);
+        checkCompileErrors(fragment, "FRAGMENT");
+        // shader Program
         ID = glCreateProgram();
-        glAttachShader(ID, vertex_shader);
-        glAttachShader(ID, fragment_shader);
+        glAttachShader(ID, vertex);
+        glAttachShader(ID, fragment);
         glLinkProgram(ID);
-        glGetProgramiv(ID, GL_LINK_STATUS, &success);
-        if(!success)
-        {
-            glGetProgramInfoLog(ID, 512, NULL, infoLog);
-            printf("ERROR::SHADER::LINKING::FAILED %s\n", infoLog);
-        }
-
-        glDeleteShader(vertex_shader);
-        glDeleteShader(fragment_shader);
+        checkCompileErrors(ID, "PROGRAM");
+        // delete the shaders as they're linked into our program now and no longer necessary
+        glDeleteShader(vertex);
+        glDeleteShader(fragment);
     }
     // activate the shader
     // ------------------------------------------------------------------------
@@ -108,6 +90,12 @@ public:
     void setFloat(const std::string &name, float value) const
     { 
         glUniform1f(glGetUniformLocation(ID, name.c_str()), value); 
+    }
+
+    void set_texture_uniform_data(Texture *t)
+    {
+        t->use();
+        setInt(t->get_name(), t->get_nr());
     }
 
 private:
