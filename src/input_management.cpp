@@ -9,6 +9,7 @@ WASD_key_input InputManager::assemble_data(WASD_key_input *d)
     wasd.a = glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS ? 1 : 0;
     wasd.s = glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS ? 1 : 0;
     wasd.d = glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS ? 1 : 0;
+    wasd.shift = glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ? 1 : 0;
     return wasd;
 }
 
@@ -28,7 +29,8 @@ void processInput(GLFWwindow *window)
         glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS ||
         glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS ||
         glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS ||
-        glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS ||
+        glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS )
     {
         InputManager::get_instance()->EventSource<WASD_key_input>::trigger();
     }

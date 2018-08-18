@@ -23,6 +23,7 @@ struct WASD_key_input {
     int a;
     int s;
     int d;
+    int shift = 0;
 };
 
 struct mouse_input

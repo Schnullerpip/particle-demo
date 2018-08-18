@@ -20,6 +20,8 @@ class Camera :
     float pitch = 0.0f;
 
     float speed = 1.5f;
+    bool running = false;
+    float running_factor = 20.f;
     float sensitivity = 1.5f;
 
     event_callback(WASD_key_input, handle)
@@ -30,8 +32,10 @@ class Camera :
         if(wasd.s) direction -= front;
         if(wasd.a) direction -= glm::normalize(glm::cross(front, up));
         if(wasd.d) direction += glm::normalize(glm::cross(front, up));
+        if(wasd.shift) running = true;
+        else running = false;
         
-        pos += direction * speed * jule::delta_time;
+        pos += direction * speed *(running ? running_factor : 1.f) * jule::delta_time;
     }
 
     event_callback(mouse_input, handle)
