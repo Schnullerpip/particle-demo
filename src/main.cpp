@@ -13,8 +13,12 @@ namespace jule
 }
 
 int main(){
+    jule::InputManager *input_manager = jule::InputManager::get_instance();
+
     Camera cam;
-    cam.register_at(InputManager::get_instance());
+
+    input_manager->EventSource<WASD_key_input>::add_listener(&cam);
+    input_manager->EventSource<mouse_input>::add_listener(&cam);
 
     Shader basic("shader/vertex/basic.vs", "shader/fragment/basic.fs");
 
@@ -99,42 +103,6 @@ int main(){
         glm::vec3(-1.3f,  1.0f, -1.5f)  
     };
 
-    #pragma region rectangle ebo
-    //rectangle
-    float ebo_vertices[] = {
-        //position           //color            //tex coords
-         0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  1.0f, 1.0f, //top right
-         0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f, //bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f, //bottom left
-        -0.5f, 0.5f, 0.0f,   0.0f, 0.0f, 0.0f,  0.0f, 1.0f  //top left
-    };
-    unsigned int ebo_indices[] = {
-        0, 1, 3, //first triangle
-        1, 2, 3 //second triangle
-    };
-
-    unsigned int ebo, ebo_vbo, ebo_vao;
-    glGenVertexArrays(1, &ebo_vao);
-    glBindVertexArray(ebo_vao);
-
-    glGenBuffers(1, &ebo);
-    glGenBuffers(1, &ebo_vbo);
-
-    glBindBuffer(GL_ARRAY_BUFFER, ebo_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(ebo_vertices), ebo_vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ebo_indices), ebo_indices, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(0, 3, GL_FLOAT,GL_FALSE, 8 * sizeof(GLfloat), (void*)0);
-    glVertexAttribPointer(1, 3, GL_FLOAT,GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
-    glVertexAttribPointer(2, 2, GL_FLOAT,GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
-    glBindVertexArray(0);
-    #pragma endregion
-
     glBindVertexArray(vao);
 
     //shader usage
@@ -190,6 +158,7 @@ int main(){
     }
 }
 
+    delete input_manager;
     glfwTerminate();
     return 0;
 }

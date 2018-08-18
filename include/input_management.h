@@ -4,33 +4,35 @@
 #include"main.h"
 #include"observer.h"
 
-class InputManager : public Observable<WASD_key_input>
+namespace jule{
+class InputManager :
+    public EventSource<WASD_key_input>,
+    public EventSource<mouse_input>
 {
     GLFWwindow *window;
-    InputManager(GLFWwindow *window):window(window){}
 
-    //different event data_assembly methods that need to be implemented
-    WASD_key_input assemble_data() override
-    {
-        WASD_key_input wasd;
-        wasd.w = glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS ? 1 : 0;
-        wasd.a = glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS ? 1 : 0;
-        wasd.s = glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS ? 1 : 0;
-        wasd.d = glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS ? 1 : 0;
-        return wasd;
-    }
+    //EventSource<WASD_key_input>::
+    WASD_key_input assemble_data(WASD_key_input *d) override;
+
+    //EventSource<mouse_input>::
+    mouse_input assemble_data(mouse_input *d)override;
 
 public:
+    mouse_input mi;
+
     static InputManager * get_instance()
     {
         static InputManager *input_manager = new InputManager(jule::window);
         return input_manager;
     }
+
+    InputManager(GLFWwindow *window):window(window){}
+    virtual ~InputManager(){}
 };
 
 
-namespace jule{
 void processInput(GLFWwindow *window);
+void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 }//namespace jule
 
 #endif

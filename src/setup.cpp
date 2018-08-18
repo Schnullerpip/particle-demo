@@ -1,4 +1,5 @@
 #include"setup.h"
+#include"input_management.h"
 
 namespace {
     jule::setup setup;
@@ -39,6 +40,10 @@ int init_all()
     glViewport(jule::window_x_coord, jule::window_y_coord, jule::window_width, jule::window_height);
 
     glfwSetFramebufferSizeCallback(jule::window, jule::framebuffer_size_callback);
+
+    //input specific
+    glfwSetInputMode(jule::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(jule::window, jule::mouseCallback);
 
     return 0;
 }

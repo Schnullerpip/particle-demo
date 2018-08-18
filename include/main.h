@@ -15,5 +15,22 @@ extern GLFWwindow *window;
 
 extern float delta_time;
 }
+
+
+//event data used to decouple camera and input management
+struct WASD_key_input {
+    int w;
+    int a;
+    int s;
+    int d;
+};
+
+struct mouse_input
+{
+    float xoffset;
+    float yoffset;
+};
+
+
 #endif
 
