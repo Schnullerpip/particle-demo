@@ -45,6 +45,13 @@ int init_all()
     glfwSetInputMode(jule::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(jule::window, jule::mouseCallback);
 
+    //depth
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    //transparency
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     return 0;
 }
 

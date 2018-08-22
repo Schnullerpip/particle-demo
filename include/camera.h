@@ -74,6 +74,11 @@ public:
     {
         return glm::lookAt(pos, pos + front, up);
     }
+
+    glm::vec3 getPosition()
+    {
+        return pos;
+    }
 };
 
 #endif

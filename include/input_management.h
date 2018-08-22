@@ -22,8 +22,8 @@ public:
 
     static InputManager * get_instance()
     {
-        static InputManager *input_manager = new InputManager(jule::window);
-        return input_manager;
+        static InputManager input_manager(jule::window);
+        return &input_manager;
     }
 
     InputManager(GLFWwindow *window):window(window){}
