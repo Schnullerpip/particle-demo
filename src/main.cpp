@@ -13,6 +13,8 @@ namespace jule
     float delta_time = 0.0f;
     std::random_device rd;
     std::mt19937 gen(rd());
+
+    bool running = true;
 }
 
 int main(){
@@ -25,6 +27,7 @@ int main(){
 
     input_manager->EventSource<WASD_key_input>::add_listener(&cam);
     input_manager->EventSource<mouse_input>::add_listener(&cam);
+    input_manager->EventSource<pause>::add_delegate([](pause p){jule::running = !jule::running;});
 
     Shader basic("shader/vertex/basic.vs", "shader/fragment/basic.fs");
     Shader particle_shader("shader/vertex/particle.vs", "shader/fragment/particle.fs", "shader/geometry/particle.gs");
@@ -116,35 +119,39 @@ int main(){
 
     //PARTICLES
 
-    const size_t num_particles = 100;
+    const size_t num_particles = 1000;
     particle proto_particle(1.f);
 
-    particle_system<num_particles> particle_sys(&proto_particle, .53f, 15,
+    particle_system<num_particles> particle_sys(&proto_particle, .04f, 25,
     [](){
         static glm::vec3 axis = glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f));
         glm::mat4 rotation;
-        rotation = glm::rotate(rotation, 90.f, axis);
+        rotation = glm::rotate(rotation, 0.f, axis);
         glm::vec4 pos = glm::vec4(
-          jule::get_rnd_float(-0.2f, 0.2f),
-          jule::get_rnd_float(0.f, 0.f),
-          jule::get_rnd_float(-0.2f, 0.2f),
+          jule::get_rnd_float(-0.031f, 0.031f),
+          jule::get_rnd_float(-0.031f, 0.031f),
+          jule::get_rnd_float(-0.031f, 0.031f),
           1.f) * rotation;
+        //return glm::vec3(0.f, 0.f, 0.f);
         return glm::vec3(pos.x, pos.y, pos.z);
 
         //return glm::vec3(0.f, 0.f, 0.f);
     },
     [](){
-        glm::vec3 direction(
-            //jule::get_rnd_float(0.f, 0.f),
-            //jule::get_rnd_float(0.f, 0.f),
-            //jule::get_rnd_float(0.f, 0.f)
-            0.f, 0.f, 0.f
+        glm::vec3 acc(
+            0.f,
+            jule::get_rnd_float(2.7f,  3.3f),
+            0.f
         );
-        direction = glm::normalize(direction);
-        return glm::vec3(0.f, 0.f, 0.f);
+        //direction = glm::normalize(direction);
+        return acc;
+        //return glm::vec3(0.f, 0.f, 0.f);
     },
     [](){
-        return glm::vec3(0.f, 0.f, 0.f);
+        float vel_x = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
+        float vel_y = jule::get_rnd_float(-2.f, 2.f);
+        float vel_z = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
+        return glm::normalize(glm::vec3(vel_x, vel_y, vel_z)) * .6f;
     });
 
 
@@ -195,6 +202,8 @@ int main(){
 
         {//PARTICLES
             particle_shader.use();
+            //life info
+            particle_shader.setFloat("max_life", proto_particle.m_life);
             //texture usage
             particle_shader.set_texture_uniform_data(&particle_tex);
             //transform usage
@@ -202,7 +211,8 @@ int main(){
             particle_shader.setMatrix4f("u_view", &view);
 
             particle_sys.use();
-            particle_sys.update_particles(cam.getPosition());
+            if(jule::running)
+                particle_sys.update_particles(cam.getPosition());
             particle_sys.render_particles();
         }
 
@@ -221,5 +231,10 @@ float get_rnd_float(float min, float max)
 {
     std::uniform_real_distribution<> dis(min, max);
     return dis(gen);
+}
+bool get_rnd_bool()
+{
+    std::uniform_int_distribution<> dis(0, 1);
+    return dis(gen) == 0 ? true : false;
 }
 }//namespace jule

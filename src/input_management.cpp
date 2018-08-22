@@ -18,12 +18,18 @@ mouse_input InputManager::assemble_data(mouse_input *d)
     return mi;
 }
 
+pause InputManager::assemble_data(pause *p)
+{
+    return pause();
+}
+
 void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(window, true);
     }
+
 
     if(
         glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS ||
@@ -33,6 +39,18 @@ void processInput(GLFWwindow *window)
         glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS )
     {
         InputManager::get_instance()->EventSource<WASD_key_input>::trigger();
+    }
+
+
+    static bool is_paused = false;
+    int pause_button = glfwGetKey(window, GLFW_KEY_SPACE);
+    if(pause_button == GLFW_PRESS && is_paused == false)
+    {
+        is_paused = true;
+        InputManager::get_instance()->EventSource<pause>::trigger();
+    }else if(pause_button == GLFW_RELEASE)
+    {
+        is_paused = false;
     }
 }
 

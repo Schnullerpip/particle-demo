@@ -7,7 +7,8 @@
 namespace jule{
 class InputManager :
     public EventSource<WASD_key_input>,
-    public EventSource<mouse_input>
+    public EventSource<mouse_input>,
+    public EventSource<pause>
 {
     GLFWwindow *window;
 
@@ -16,6 +17,9 @@ class InputManager :
 
     //EventSource<mouse_input>::
     mouse_input assemble_data(mouse_input *d)override;
+
+    //EventSource<pause>::
+    pause assemble_data(pause *p)override;
 
 public:
     mouse_input mi;

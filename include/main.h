@@ -26,6 +26,7 @@ extern std::random_device rd;
 extern std::mt19937 gen;
 
 float get_rnd_float(float min, float max);
+bool get_rnd_bool();
 }//namespace jule
 
 
@@ -43,6 +44,8 @@ struct mouse_input
     float xoffset;
     float yoffset;
 };
+
+struct pause {};
 
 
 #endif

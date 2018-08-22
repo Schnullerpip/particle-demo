@@ -8,7 +8,7 @@
 
 enum yes_no {YES, NO};
 enum ALIVE {alive, dead};
-enum XYZ {x, y, z};
+enum PARTICLE_ATTRIB {x, y, z, life};
 
 #define THRESHOLD 0.0005f
 
@@ -56,7 +56,8 @@ struct particle_system
     glm::vec3 (*m_get_initial_velocity)();
 
     particle particles[size];
-    float particles_position[size*3];
+    //3f position, 1f life
+    float particles_data[size*(3/*xyz*/+1/*life*/)];
 
     particle_system(particle *prototype, float rate_in_seconds, size_t bulk, glm::vec3 (*spawn_position)(), glm::vec3 (*acc_func_ptr)(), glm::vec3 (*vel_func_ptr)())
         :m_prototype(prototype),
@@ -77,10 +78,13 @@ struct particle_system
         glBindVertexArray(vao);
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * size, particles_position, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * size, particles_data, GL_DYNAMIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        GLsizei stride = 4 * sizeof(GLfloat);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
         glEnableVertexAttribArray(0);
+        glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(GLfloat)*3));
+        glEnableVertexAttribArray(1);
     }
 
     unsigned int particles_alive = 0;
@@ -124,15 +128,16 @@ struct particle_system
         {
             particle &p = particles[s];
 
-            size_t offset = s * 3;
-            particles_position[offset + x] = p.m_xyz.x;
-            particles_position[offset + y] = p.m_xyz.y;
-            particles_position[offset + z] = p.m_xyz.z;
+            size_t offset = s * 4;
+            particles_data[offset + x] = p.m_xyz.x;
+            particles_data[offset + y] = p.m_xyz.y;
+            particles_data[offset + z] = p.m_xyz.z;
+            particles_data[offset + life] = p.m_life;
         }
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        //glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * particles_alive, particles_position + num_dead, GL_DYNAMIC_DRAW);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * particles_alive, particles_position, GL_DYNAMIC_DRAW);
+        //glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * particles_alive, particles_data + num_dead, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * particles_alive, particles_data, GL_DYNAMIC_DRAW);
     }
 
     void render_particles()
