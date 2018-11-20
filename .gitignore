@@ -1,2 +1,4 @@
 .vscode/*
 particles.code-workspace
+src/.vscode/
+*.o
