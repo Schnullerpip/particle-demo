@@ -4,14 +4,6 @@
 
 std::vector<particle_system*> particle_system::particle_systems = {};
 
-void print_vec(glm::vec3 &&v)
-{
-    printf("(%f,%f,%f)", v.x, v.y, v.z);
-}
-void print_vec(glm::vec3 &v)
-{
-    printf("(%f,%f,%f)", v.x, v.y, v.z);
-}
 
 void collide(particle &p1, particle &p2, collision_data &collision_data)
 {
@@ -87,7 +79,7 @@ void particle_system::GlobalParticleCollisions()
     }
 }
 
-void particle_system::Update(glm::vec3 cam_pos)
+void particle_system::Update()
 {
     if(!jule::running){
         return;
@@ -95,7 +87,7 @@ void particle_system::Update(glm::vec3 cam_pos)
 
     for(auto ps : particle_system::particle_systems)
     {
-        ps->update_particles(cam_pos);
+        ps->update_particles();
     }
 
     //collision handling
@@ -159,7 +151,7 @@ void particle_system::intern_particle_collision()
     if(m_intern_particle_collision == YES)
     particle_system_collision(this, this);
 }
-void particle_system::update_particles(glm::vec3 camera_position)
+void particle_system::update_particles()
 {
     float delta_time = jule::delta_time;
     particles_alive = 0;
@@ -189,6 +181,10 @@ void particle_system::update_particles(glm::vec3 camera_position)
     std::sort(particles, particles+m_size, [](particle &p1, particle &p2){
         return p1.m_life > p2.m_life;});
 
+}
+
+void particle_system::render_particles(glm::vec3 camera_position)
+{
     //sort alive particles in correct order for camera (so blending is right)
     std::sort(particles, particles+particles_alive, [&](particle &p1, particle &p2){
         return  glm::length2(camera_position-p1.m_xyz) > glm::length2(camera_position-p2.m_xyz);
@@ -206,12 +202,15 @@ void particle_system::update_particles(glm::vec3 camera_position)
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * particles_alive, particles_data + num_dead, GL_DYNAMIC_DRAW);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * particles_alive, particles_data, GL_DYNAMIC_DRAW);
+
+    glDrawArrays(GL_POINTS, 0, particles_alive);
 }
 
 void particle_system::reset_particle(particle *p, ALIVE a) const 
 {
+    *p = m_prototype;
+
     if(a == alive)
         p->m_life = m_prototype.m_life;
     else

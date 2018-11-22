@@ -4,10 +4,10 @@
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
+
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
-
 
 #include<vector>
 #include<map>
@@ -27,6 +27,7 @@ extern std::mt19937 gen;
 
 float get_rnd_float(float min, float max);
 bool get_rnd_bool();
+int get_rnd_int(int min, int max);
 
 extern bool running;
 
@@ -52,6 +53,13 @@ struct mouse_input
 };
 
 struct pause {};
+
+//utility functions
+namespace jule{
+    glm::vec3 rotateAround(glm::vec3 &pointToRotate, glm::vec3 &rotationCenter, glm::mat4 &rotation);
+
+    glm::vec3 project_on(glm::vec3 v1, glm::vec3 v2);
+}
 
 
 #endif

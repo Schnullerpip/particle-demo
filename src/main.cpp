@@ -1,12 +1,16 @@
 #include<cmath>
 
-#include"main.h"
-#include"input_management.h"
-#include"setup.h"
-#include"shader.h"
-#include"texture.h"
-#include"camera.h"
-#include"particle.h"
+#include"../include/main.h"
+#include"../include/input_management.h"
+#include"../include/setup.h"
+#include"../include/shader.h"
+#include"../include/texture.h"
+#include"../include/camera.h"
+#include"../include/particle.h"
+#include"../include/debug_line.h"
+
+//#define debug
+//define fire
 
 namespace jule
 {
@@ -16,6 +20,15 @@ namespace jule
 
     bool running = true;
     float EPSILON = 0.000005f;
+}
+
+void print_vec(glm::vec3 &&v)
+{
+    printf("(%f,%f,%f)", v.x, v.y, v.z);
+}
+void print_vec(glm::vec3 &v)
+{
+    printf("(%f,%f,%f)", v.x, v.y, v.z);
 }
 
 int main(){
@@ -33,6 +46,7 @@ int main(){
     Shader basic("shader/vertex/basic.vs", "shader/fragment/basic.fs");
     Shader fire_particle_shader("shader/vertex/particle.vs", "shader/fragment/fire_particle.fs", "shader/geometry/particle.gs");
     Shader collision_particle_shader("shader/vertex/particle.vs", "shader/fragment/particle.fs", "shader/geometry/basic.gs");
+    Shader line_shader("shader/vertex/line.vs", "shader/fragment/line.fs");
 
     Texture wood("img/container.jpg", "u_texture_1", GL_RGB, 0);
     Texture face("img/comicface.png", "u_texture_2", GL_RGBA, 1);
@@ -104,7 +118,7 @@ int main(){
     glBindVertexArray(0);
 
     glm::vec3 cubePositions[10] = {
-        glm::vec3( 0.0f,  0.0f,  0.0f), 
+        glm::vec3( 0.0f,  0.0f,  -7.0f), 
         glm::vec3( 2.0f,  5.0f, -15.0f), 
         glm::vec3(-1.5f, -2.2f, -2.5f),  
         glm::vec3(-3.8f, -2.0f, -12.3f),  
@@ -121,56 +135,115 @@ int main(){
 
     //PARTICLES
 
+#ifdef fire
     const size_t num_particles = 1000;
     particle proto_particle(1.f, &fire_particle_shader, &particle_tex);
-    proto_particle.m_radius = 0.1f;
+    proto_particle.m_radius = .3f;
 
-    //particle_system particle_sys(&proto_particle, num_particles, 25, .04f, YES, NO,
-    //[](){
-    //    static glm::vec3 axis = glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f));
-    //    glm::mat4 rotation;
-    //    rotation = glm::rotate(rotation, 0.f, axis);
-    //    glm::vec4 pos = glm::vec4(
-    //      jule::get_rnd_float(-0.031f, 0.031f),
-    //      jule::get_rnd_float(-0.031f, 0.031f),
-    //      jule::get_rnd_float(-0.031f, 0.031f),
-    //      1.f) * rotation;
-    //    //return glm::vec3(0.f, 0.f, 0.f);
-    //    return glm::vec3(pos.x, pos.y, pos.z);
+    particle_system particle_sys(proto_particle, num_particles, 25, .04f, NO, NO,
+    [](){
+        static glm::vec3 axis = glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f));
+        glm::mat4 rotation;
+        rotation = glm::rotate(rotation, 0.f, axis);
+        glm::vec4 pos = glm::vec4(
+          jule::get_rnd_float(-0.031f, 0.031f),
+          jule::get_rnd_float(-0.031f, 0.031f),
+          jule::get_rnd_float(-0.031f, 0.031f),
+          1.f) * rotation;
+        return glm::vec3(pos.x, pos.y, pos.z);
+    },
+    [](){
+        glm::vec3 acc(
+            0.f,
+            jule::get_rnd_float(2.7f,  3.3f),
+            0.f
+        );
+        //direction = glm::normalize(direction);
+        return acc;
+        //return glm::vec3(0.f, 0.f, 0.f);
+    },
+    [](){
+        float vel_x = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
+        float vel_y = jule::get_rnd_float(-2.f, 2.f);
+        float vel_z = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
+        return glm::normalize(glm::vec3(vel_x, vel_y, vel_z)) * .6f;
+    });
+#endif
 
-    //    //return glm::vec3(0.f, 0.f, 0.f);
-    //},
-    //[](){
-    //    glm::vec3 acc(
-    //        0.f,
-    //        jule::get_rnd_float(2.7f,  3.3f),
-    //        0.f
-    //    );
-    //    //direction = glm::normalize(direction);
-    //    return acc;
-    //    //return glm::vec3(0.f, 0.f, 0.f);
-    //},
-    //[](){
-    //    float vel_x = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
-    //    float vel_y = jule::get_rnd_float(-2.f, 2.f);
-    //    float vel_z = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
-    //    return glm::normalize(glm::vec3(vel_x, vel_y, vel_z)) * .6f;
-    //});
-
-
-    particle collision_proto_particle(10.f, &collision_particle_shader, &particle_tex);
-    proto_particle.m_radius = 2.1f;
     constexpr float offset = 5.f;
+    constexpr float spawn_radius = 1.f;
 
-    particle_system collision_system1(collision_proto_particle, 100, 1, 1.f, NO, YES, 
-    [](){return glm::vec3(-offset, -2.f, 0.f);},
-    [](){return glm::vec3(0.f, 0.f, 0.f);},
-    [](){return glm::vec3(1.f, 1.f, 0.f);});
+    constexpr float vel_factor= 5.f;
+    constexpr int num_particles_per_gun = 1000;
+    constexpr int particle_bulk_per_gun = 1;
+    constexpr float gun_shoot_rate = 0.1f;
 
-    particle_system collision_system2(collision_proto_particle, 100, 1, 1.f, NO, YES, 
-    [](){return glm::vec3(offset, -2.8f, 0.f);},
+    particle collision_proto_particle(4.f, &collision_particle_shader, &particle_tex);
+    collision_proto_particle.m_radius = .4f;
+
+    //particle CANON 1
+    particle_system collision_system1(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    [](){
+        static glm::vec3 spawn_center(0.f, 0.f, -offset);
+        static glm::vec3 spawn_tilt_x_axis = glm::normalize(glm::vec3(0.f, 1.f, -1.f));
+        static glm::vec3 spawn_tilt_z_axis = glm::vec3(1.f, 0.f, 0.f);
+
+        glm::vec3 spawn_pos(jule::get_rnd_float(-1.f, 1.f), jule::get_rnd_float(-1.f, 1.f), 0.f);
+        glm::vec3 x_tilted = jule::project_on(spawn_pos, spawn_tilt_x_axis);
+        glm::vec3 z_tilted = jule::project_on(spawn_pos, spawn_tilt_z_axis);
+        spawn_pos = glm::normalize(x_tilted + z_tilted) * jule::get_rnd_float(0.f, spawn_radius);
+        return spawn_center + spawn_pos;
+    },
     [](){return glm::vec3(0.f, 0.f, 0.f);},
-    [](){return glm::vec3(-1.f, 1.f, 0.f);});
+    [](){return glm::vec3(0.f, vel_factor, vel_factor);});
+
+    //particle CANON 2
+    particle_system collision_system2(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    [](){
+        static glm::vec3 spawn_center(0.f, 0.f, offset);
+        static glm::vec3 spawn_tilt_x_axis = glm::normalize(glm::vec3(0.f, 1.f, 1.f));
+        static glm::vec3 spawn_tilt_z_axis = glm::vec3(1.f, 0.f, 0.f);
+
+        glm::vec3 spawn_pos(jule::get_rnd_float(-1.f, 1.f), jule::get_rnd_float(-1.f, 1.f), 0.f);
+        glm::vec3 x_tilted = jule::project_on(spawn_pos, spawn_tilt_x_axis);
+        glm::vec3 z_tilted = jule::project_on(spawn_pos, spawn_tilt_z_axis);
+        spawn_pos = glm::normalize(x_tilted + z_tilted) * jule::get_rnd_float(0.f, spawn_radius);
+        return spawn_center + spawn_pos;
+    },
+    [](){return glm::vec3(0.f, 0.f, 0.f);},
+    [](){return glm::vec3(0.f, vel_factor, -vel_factor);});
+
+    //particle CANON 3
+    particle_system collision_system3(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    [](){
+        static glm::vec3 spawn_center(offset, 0.f, 0.f);
+        static glm::vec3 spawn_tilt_z_axis = glm::normalize(glm::vec3(1.f, 1.f, 0.f));
+        static glm::vec3 spawn_tilt_x_axis = glm::vec3(0.f, 0.f, 1.f);
+
+        glm::vec3 spawn_pos(jule::get_rnd_float(-1.f, 1.f), 0.f, jule::get_rnd_float(-1.f, 1.f));
+        glm::vec3 z_tilted = jule::project_on(spawn_pos, spawn_tilt_z_axis);
+        glm::vec3 x_tilted = jule::project_on(spawn_pos, spawn_tilt_x_axis);
+        spawn_pos = glm::normalize(x_tilted + z_tilted) * jule::get_rnd_float(0.f, spawn_radius);
+        return spawn_center + spawn_pos;
+    },
+    [](){return glm::vec3(0.f, 0.f, 0.f);},
+    [](){return glm::vec3(-vel_factor, vel_factor, 0.f);});
+
+    //particle CANON 4
+    particle_system collision_system4(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    [](){
+        static glm::vec3 spawn_center(-offset, 0.f, 0.f);
+        static glm::vec3 spawn_tilt_z_axis = glm::normalize(glm::vec3(-1.f, 1.f, 0.f));
+        static glm::vec3 spawn_tilt_x_axis = glm::vec3(0.f, 0.f, 1.f);
+
+        glm::vec3 spawn_pos(jule::get_rnd_float(-1.f, 1.f), 0.f, jule::get_rnd_float(-1.f, 1.f));
+        glm::vec3 z_tilted = jule::project_on(spawn_pos, spawn_tilt_z_axis);
+        glm::vec3 x_tilted = jule::project_on(spawn_pos, spawn_tilt_x_axis);
+        spawn_pos = glm::normalize(x_tilted + z_tilted) * jule::get_rnd_float(0.f, spawn_radius);
+        return spawn_center + spawn_pos;
+    },
+    [](){return glm::vec3(0.f, 0.f, 0.f);},
+    [](){return glm::vec3(vel_factor, vel_factor, 0.f);});
 
 //GAMELOOP
 {
@@ -192,7 +265,7 @@ int main(){
 
 
         //transformations
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(jule::window_width) / jule::window_height, 0.1f, 100.f);
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(jule::window_width) / jule::window_height, 0.1f, 700.f);
 
         glm::mat4 view = cam.update();
 
@@ -215,9 +288,8 @@ int main(){
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-
         //PARTICLES
-        particle_system::Update(cam.getPosition());
+        particle_system::Update();
         for(auto ps : particle_system::particle_systems)
         {
             particle &prototype = ps->m_prototype;
@@ -233,7 +305,22 @@ int main(){
             //transform usage
             s->setMatrix4f("u_projection", &projection);
             s->setMatrix4f("u_view", &view);
-            ps->render_particles();
+            ps->render_particles(cam.getPosition());
+
+#ifdef debug
+            for(unsigned i = 0; i < ps->NumberParticlesAlive(); ++i)
+            {
+                particle &p = ps->particles[i];
+                glm::vec3 v1 = p.m_xyz;
+                glm::vec3 v2 = v1;
+
+                v1.z += 0.1f;
+                v2.x += p.m_radius;
+                v2.z += 0.1f;
+
+                draw_line(v1, v2, line_shader, view, projection);
+            }
+#endif
         }
         // check and call events and swap the buffers
         glfwPollEvents();
@@ -255,5 +342,31 @@ bool get_rnd_bool()
 {
     std::uniform_int_distribution<> dis(0, 1);
     return dis(gen) == 0 ? true : false;
+}
+
+int get_rnd_int(int min, int max)
+{
+    std::uniform_int_distribution<> dis(min, max);
+    return dis(gen);
+}
+
+glm::vec3 rotateAround(glm::vec3 &pointToRotate, glm::vec3 &rotationCenter, glm::mat4 &rotation)
+{
+    glm::vec4 pointToRotate_ = glm::vec4(pointToRotate, 1.f);
+
+    glm::mat4 translation = glm::translate(glm::mat4(), rotationCenter);
+    glm::mat4 inv_translation = glm::inverse(translation);
+
+    glm::mat4 transform = translation * rotation * inv_translation;
+
+    glm::vec4 a = transform * pointToRotate_;
+    glm::vec3 rotated_point(a.x, a.y, a.z);
+    return rotated_point;
+}
+
+glm::vec3 project_on(glm::vec3 v1, glm::vec3 v2)
+{
+    v2 = glm::normalize(v2);
+    return v2 * (glm::dot(v1, v2));
 }
 }//namespace jule

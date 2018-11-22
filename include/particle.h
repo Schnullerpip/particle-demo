@@ -59,7 +59,7 @@ struct particle_system
     //container with all particle systems - particle systems will register to it at construction
     static std::vector<particle_system*> particle_systems;
     static void GlobalParticleCollisions();
-    static void Update(glm::vec3 cam_position);
+    static void Update();
     static void particle_system_collision(particle_system *ps1, particle_system *ps2);
 
     particle m_prototype;
@@ -88,12 +88,9 @@ struct particle_system
         glm::vec3 (*vel_func_ptr)());
 
     void intern_particle_collision();
-    void update_particles(glm::vec3 camera_position);
+    void update_particles();
 
-    inline void render_particles()
-    {
-        glDrawArrays(GL_POINTS, 0, particles_alive);
-    }
+    void render_particles(glm::vec3 camera_position);
 
     void reset_particle(particle *p, ALIVE a) const;
 
@@ -104,6 +101,8 @@ struct particle_system
         m_prototype.m_particle_shader->use();
         glBindVertexArray(vao);
     }
+
+    inline unsigned int NumberParticlesAlive()const {return particles_alive;}
 
     ~particle_system();
 

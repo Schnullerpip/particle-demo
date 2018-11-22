@@ -3,11 +3,8 @@
 layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
-in float pass_life[];
-
 out vec2 pass_tex_coords;
 
-uniform float max_life;
 uniform float particle_radius;
 
 const vec2 tex_coords[] = vec2 [] (
@@ -30,7 +27,7 @@ void main()
 
     for(int i = 0; i < 4; ++i)
     {
-        gl_Position = pos + vec4(coords[i] * particle_radius, 0.0f, 0.0f);
+        gl_Position = pos + vec4(coords[i] * 2.0f * particle_radius, 0.0f, 0.0f);
         pass_tex_coords = tex_coords[i];
         EmitVertex();
     }
