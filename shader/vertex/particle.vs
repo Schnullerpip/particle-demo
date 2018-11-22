@@ -3,6 +3,7 @@ layout(location = 0) in vec3 in_pos;
 layout(location = 1) in float in_life;
 
 out float pass_life;
+out float pass_radius;
 
 uniform mat4 u_model;
 uniform mat4 u_view;

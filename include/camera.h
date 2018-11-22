@@ -11,7 +11,7 @@ class Camera :
     public Observer<WASD_key_input>,
     public Observer<mouse_input>
 {
-    glm::vec3 pos     = glm::vec3(0.f, 0.f, 3.f);
+    glm::vec3 pos     = glm::vec3(0.f, 0.f, 10.f);
     glm::vec3 front   = glm::vec3(0.f, 0.f, -1.f);
     glm::vec3 up      = glm::vec3(0.f, 1.f, 0.f);
     glm::vec3 right   = glm::vec3(1.f, 0.f, 0.f);

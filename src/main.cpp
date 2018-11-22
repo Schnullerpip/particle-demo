@@ -15,6 +15,7 @@ namespace jule
     std::mt19937 gen(rd());
 
     bool running = true;
+    float EPSILON = 0.000005f;
 }
 
 int main(){
@@ -30,7 +31,8 @@ int main(){
     input_manager->EventSource<pause>::add_delegate([](pause p){jule::running = !jule::running;});
 
     Shader basic("shader/vertex/basic.vs", "shader/fragment/basic.fs");
-    Shader particle_shader("shader/vertex/particle.vs", "shader/fragment/particle.fs", "shader/geometry/particle.gs");
+    Shader fire_particle_shader("shader/vertex/particle.vs", "shader/fragment/fire_particle.fs", "shader/geometry/particle.gs");
+    Shader collision_particle_shader("shader/vertex/particle.vs", "shader/fragment/particle.fs", "shader/geometry/basic.gs");
 
     Texture wood("img/container.jpg", "u_texture_1", GL_RGB, 0);
     Texture face("img/comicface.png", "u_texture_2", GL_RGBA, 1);
@@ -102,7 +104,7 @@ int main(){
     glBindVertexArray(0);
 
     glm::vec3 cubePositions[10] = {
-        glm::vec3( 3.0f,  0.0f,  0.0f), 
+        glm::vec3( 0.0f,  0.0f,  0.0f), 
         glm::vec3( 2.0f,  5.0f, -15.0f), 
         glm::vec3(-1.5f, -2.2f, -2.5f),  
         glm::vec3(-3.8f, -2.0f, -12.3f),  
@@ -120,44 +122,60 @@ int main(){
     //PARTICLES
 
     const size_t num_particles = 1000;
-    particle proto_particle(1.f);
+    particle proto_particle(1.f, &fire_particle_shader, &particle_tex);
+    proto_particle.m_radius = 0.1f;
 
-    particle_system<num_particles> particle_sys(&proto_particle, .04f, 25,
-    [](){
-        static glm::vec3 axis = glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f));
-        glm::mat4 rotation;
-        rotation = glm::rotate(rotation, 0.f, axis);
-        glm::vec4 pos = glm::vec4(
-          jule::get_rnd_float(-0.031f, 0.031f),
-          jule::get_rnd_float(-0.031f, 0.031f),
-          jule::get_rnd_float(-0.031f, 0.031f),
-          1.f) * rotation;
-        //return glm::vec3(0.f, 0.f, 0.f);
-        return glm::vec3(pos.x, pos.y, pos.z);
+    //particle_system particle_sys(&proto_particle, num_particles, 25, .04f, YES, NO,
+    //[](){
+    //    static glm::vec3 axis = glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f));
+    //    glm::mat4 rotation;
+    //    rotation = glm::rotate(rotation, 0.f, axis);
+    //    glm::vec4 pos = glm::vec4(
+    //      jule::get_rnd_float(-0.031f, 0.031f),
+    //      jule::get_rnd_float(-0.031f, 0.031f),
+    //      jule::get_rnd_float(-0.031f, 0.031f),
+    //      1.f) * rotation;
+    //    //return glm::vec3(0.f, 0.f, 0.f);
+    //    return glm::vec3(pos.x, pos.y, pos.z);
 
-        //return glm::vec3(0.f, 0.f, 0.f);
-    },
-    [](){
-        glm::vec3 acc(
-            0.f,
-            jule::get_rnd_float(2.7f,  3.3f),
-            0.f
-        );
-        //direction = glm::normalize(direction);
-        return acc;
-        //return glm::vec3(0.f, 0.f, 0.f);
-    },
-    [](){
-        float vel_x = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
-        float vel_y = jule::get_rnd_float(-2.f, 2.f);
-        float vel_z = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
-        return glm::normalize(glm::vec3(vel_x, vel_y, vel_z)) * .6f;
-    });
+    //    //return glm::vec3(0.f, 0.f, 0.f);
+    //},
+    //[](){
+    //    glm::vec3 acc(
+    //        0.f,
+    //        jule::get_rnd_float(2.7f,  3.3f),
+    //        0.f
+    //    );
+    //    //direction = glm::normalize(direction);
+    //    return acc;
+    //    //return glm::vec3(0.f, 0.f, 0.f);
+    //},
+    //[](){
+    //    float vel_x = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
+    //    float vel_y = jule::get_rnd_float(-2.f, 2.f);
+    //    float vel_z = jule::get_rnd_float(0.0f, 2.8f) * (jule::get_rnd_bool() ? -1.f : 1.f);
+    //    return glm::normalize(glm::vec3(vel_x, vel_y, vel_z)) * .6f;
+    //});
 
+
+    particle collision_proto_particle(10.f, &collision_particle_shader, &particle_tex);
+    proto_particle.m_radius = 2.1f;
+    constexpr float offset = 5.f;
+
+    particle_system collision_system1(collision_proto_particle, 100, 1, 1.f, NO, YES, 
+    [](){return glm::vec3(-offset, -2.f, 0.f);},
+    [](){return glm::vec3(0.f, 0.f, 0.f);},
+    [](){return glm::vec3(1.f, 1.f, 0.f);});
+
+    particle_system collision_system2(collision_proto_particle, 100, 1, 1.f, NO, YES, 
+    [](){return glm::vec3(offset, -2.8f, 0.f);},
+    [](){return glm::vec3(0.f, 0.f, 0.f);},
+    [](){return glm::vec3(-1.f, 1.f, 0.f);});
 
 //GAMELOOP
 {
     float last_frame = 0.0f;
+    jule::running = true;
 
     while(!glfwWindowShouldClose(jule::window))
     {
@@ -198,24 +216,25 @@ int main(){
         }
 
 
+        //PARTICLES
+        particle_system::Update(cam.getPosition());
+        for(auto ps : particle_system::particle_systems)
+        {
+            particle &prototype = ps->m_prototype;
+            Shader *s = prototype.m_particle_shader;
 
-
-        {//PARTICLES
-            particle_shader.use();
+            ps->use();
             //life info
-            particle_shader.setFloat("max_life", proto_particle.m_life);
+            s->setFloat("max_life", prototype.m_life);
+            //radius info
+            s->setFloat("particle_radius", prototype.m_radius);
             //texture usage
-            particle_shader.set_texture_uniform_data(&particle_tex);
+            s->set_texture_uniform_data(prototype.m_particle_texture);
             //transform usage
-            particle_shader.setMatrix4f("u_projection", &projection);
-            particle_shader.setMatrix4f("u_view", &view);
-
-            particle_sys.use();
-            if(jule::running)
-                particle_sys.update_particles(cam.getPosition());
-            particle_sys.render_particles();
+            s->setMatrix4f("u_projection", &projection);
+            s->setMatrix4f("u_view", &view);
+            ps->render_particles();
         }
-
         // check and call events and swap the buffers
         glfwPollEvents();
         glfwSwapBuffers(jule::window);

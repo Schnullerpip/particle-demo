@@ -67,18 +67,11 @@ namespace {
 
         return shader;
     }
-
-
-    //state
-    Shader *currently_used_shader = nullptr;
-
 }
 
 namespace jule{
-Shader * get_currently_bound_shader()
-{
-    return currently_used_shader;
-}
+Shader * get_currently_bound_shader();
+void set_currently_bound_shader(Shader *s);
 }//namespace jule
 
 class Shader
@@ -114,7 +107,7 @@ public:
     // ------------------------------------------------------------------------
     void use() 
     { 
-        currently_used_shader = this;
+        jule::set_currently_bound_shader(this);
         glUseProgram(ID); 
     }
     // utility uniform functions

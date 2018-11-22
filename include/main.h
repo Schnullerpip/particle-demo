@@ -27,6 +27,12 @@ extern std::mt19937 gen;
 
 float get_rnd_float(float min, float max);
 bool get_rnd_bool();
+
+extern bool running;
+
+//a tolerance for float calculations
+extern float EPSILON;
+
 }//namespace jule
 
 
