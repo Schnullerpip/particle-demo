@@ -1,6 +1,7 @@
 csrc = $(wildcard src/*.c)
 ccsrc = $(wildcard src/*.cpp) 
 obj = $(csrc:.c=.o) $(ccsrc:.cpp=.o)
+DEPS = include/*.h include/*.hpp
 
 LDFLAGS = -lglfw3 -lGL -lX11 -lXi -lXrandr -ldl -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread
 idir=-Iinclude -I/home/julian/Programs/glfw-build/include
@@ -13,6 +14,12 @@ target=particles-demo
 
 all: $(obj)
 	g++ $(obj) $(LDFLAGS) -o $(target) $(ccflags) && tree
+
+coop: $(csrc) $(ccsrc)
+	$(llvmBuild)/bin/coop $^ -- -i include && clang-format $^ $(DEPS) -i
+
+coopa: $(csrc) $(ccsrc)
+	$(llvmBuild)/bin/coop $^ -- -i include --analyze-only
 
 .PHONY: clean
 

@@ -9,7 +9,7 @@
 
 enum yes_no {YES, NO};
 enum ALIVE {alive, dead};
-enum PARTICLE_ATTRIB {x, y, z, life};
+enum PARTICLE_ATTRIB {x, y, z, life, r, g, b};
 
 struct particle
 {
@@ -31,7 +31,7 @@ struct particle
 
     float m_mass = 1.f;
 
-    float color[3] = {1.f, 0.6f, 0.3f};
+    float m_color[3] = {1.f, 0.6f, 0.3f};
 
     Shader *m_particle_shader = nullptr;
     Texture *m_particle_texture = nullptr;

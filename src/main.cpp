@@ -203,6 +203,7 @@ int main(){
     [](){return glm::vec3(0.f, vel_factor, vel_factor);});
 
     //particle CANON 2
+    memcpy(collision_proto_particle.m_color, jule::BLUE, 3 * sizeof(float));
     particle_system collision_system2(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, internal_col_pol, global_col_pol,
     [](){
         static glm::vec3 spawn_center(0.f, 0.f, offset);
@@ -219,6 +220,7 @@ int main(){
     [](){return glm::vec3(0.f, vel_factor, -vel_factor);});
 
     //particle CANON 3
+    memcpy(collision_proto_particle.m_color, jule::RED, 3 * sizeof(float));
     particle_system collision_system3(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, internal_col_pol, global_col_pol,
     [](){
         static glm::vec3 spawn_center(offset, 0.f, 0.f);
@@ -235,6 +237,7 @@ int main(){
     [](){return glm::vec3(-vel_factor, vel_factor, 0.f);});
 
     //particle CANON 4
+    memcpy(collision_proto_particle.m_color, jule::GREEN, 3 * sizeof(float));
     collision_proto_particle.m_radius = 1.2f;
     collision_proto_particle.m_mass = 9000.f;
     particle_system collision_system4(collision_proto_particle, num_particles_per_gun, 1, 1.f, internal_col_pol, global_col_pol,

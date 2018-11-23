@@ -99,6 +99,8 @@ void particle_system::Update()
     }
 }
 
+constexpr size_t stride = 3/*xyz*/+1/*life*/+3/*color*/;
+
 particle_system::particle_system(
     particle prototype,
     size_t size,
@@ -123,10 +125,11 @@ particle_system::particle_system(
     particles = new particle[m_size];
     for(size_t i = 0; i < m_size; ++i)
     {
+        //TODO make this worse by having an array of particle* and getting each individual with new
         reset_particle(&particles[i], dead);
     }
 
-    particles_data = new float[m_size*(3/*xyz*/+1/*life*/)];
+    particles_data = new float[m_size*(stride)];
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
@@ -134,13 +137,15 @@ particle_system::particle_system(
     glBindVertexArray(vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * size, particles_data, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * stride * m_size, particles_data, GL_DYNAMIC_DRAW);
 
-    GLsizei stride = 4 * sizeof(GLfloat);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
+    GLsizei stride_size = stride * sizeof(GLfloat);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride_size, (void*)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(GLfloat)*3));
+    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, stride_size, (void*)(sizeof(GLfloat)*3));
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride_size, (void*)(sizeof(GLfloat)*4));
+    glEnableVertexAttribArray(2);
 
     //register to the container, that holds all particle_systems
     particle_systems.push_back(this);
@@ -194,15 +199,18 @@ void particle_system::render_particles(glm::vec3 camera_position)
     {
         particle &p = particles[s];
 
-        size_t offset = s * 4;
+        size_t offset = s * stride;
         particles_data[offset + x] = p.m_xyz.x;
         particles_data[offset + y] = p.m_xyz.y;
         particles_data[offset + z] = p.m_xyz.z;
         particles_data[offset + life] = p.m_life;
+        particles_data[offset + r] = p.m_color[0];
+        particles_data[offset + g] = p.m_color[1];
+        particles_data[offset + b] = p.m_color[2];
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 * particles_alive, particles_data, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * stride * particles_alive, particles_data, GL_DYNAMIC_DRAW);
 
     glDrawArrays(GL_POINTS, 0, particles_alive);
 }
@@ -219,6 +227,7 @@ void particle_system::reset_particle(particle *p, ALIVE a) const
     p->m_xyz = m_get_spawn_position();
     p->m_acc = m_get_initial_acceleration();
     p->m_vel = m_get_initial_velocity();
+    memcpy(p->m_color, m_prototype.m_color, 3*sizeof(float));
 }
 
 void particle_system::reset_first_unused()

@@ -5,6 +5,7 @@
 
 in vec2 pass_tex_coords;
 in float fs_life;
+in vec3 gs_color;
 
 out vec4 color;
 

@@ -4,9 +4,11 @@ layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
 in float pass_life[];
+in vec3 vs_color[];
 
 out vec2 pass_tex_coords;
 out float fs_life;
+out vec3 gs_color;
 
 uniform float max_life;
 uniform float particle_radius;
@@ -44,6 +46,7 @@ void main()
         gl_Position = pos + vec4(coords[i] * particle_radius * scale_factor, 0.0f, 0.0f);
         pass_tex_coords = tex_coords[i];
         fs_life = life_factor;
+        gs_color = vs_color[0];
         EmitVertex();
     }
     for(int i = 2; i < 4; ++i)
@@ -51,6 +54,7 @@ void main()
         gl_Position = pos + vec4(coords[i] * particle_radius * (scale_factor), 0.0f, 0.0f);
         pass_tex_coords = tex_coords[i];
         fs_life = life_factor;
+        gs_color = vs_color[0];
         EmitVertex();
     }
     EndPrimitive();

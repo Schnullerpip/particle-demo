@@ -5,6 +5,7 @@
 
 in vec2 pass_tex_coords;
 in float fs_life;
+in vec3 gs_color;
 
 out vec4 color;
 
@@ -15,5 +16,5 @@ void main()
     color = texture(u_texture_1, pass_tex_coords);
     if(color.x < 0.0005f) discard;
 
-    color = vec4(1.f, 0.6f, 0.3f, color.x);
+    color = vec4(gs_color, color.x);
 }

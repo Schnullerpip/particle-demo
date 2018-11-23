@@ -3,7 +3,10 @@
 layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
+in vec3 vs_color[];
+
 out vec2 pass_tex_coords;
+out vec3 gs_color;
 
 uniform float particle_radius;
 
@@ -29,6 +32,7 @@ void main()
     {
         gl_Position = pos + vec4(coords[i] * 2.0f * particle_radius, 0.0f, 0.0f);
         pass_tex_coords = tex_coords[i];
+        gs_color = vs_color[0];
         EmitVertex();
     }
     EndPrimitive();

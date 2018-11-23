@@ -34,6 +34,16 @@ extern bool running;
 //a tolerance for float calculations
 extern float EPSILON;
 
+//predefined colors
+constexpr float RED[3] =   {1.f, 0.f, 0.f};
+constexpr float GREEN[3] = {0.f, 1.f, 0.f};
+constexpr float BLUE[3] =  {0.f, 0.f, 1.f};
+
+constexpr float BLACK[3] =  {0.f, 0.f, 0.f};
+constexpr float WHITE[3] =  {1.f, 1.f, 1.f};
+
+constexpr float ORANGE[3] =  {1.f, .6f, .3f};
+
 }//namespace jule
 
 
