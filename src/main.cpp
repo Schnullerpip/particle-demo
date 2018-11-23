@@ -1,13 +1,13 @@
 #include<cmath>
 
-#include"../include/main.h"
-#include"../include/input_management.h"
-#include"../include/setup.h"
-#include"../include/shader.h"
-#include"../include/texture.h"
-#include"../include/camera.h"
-#include"../include/particle.h"
-#include"../include/debug_line.h"
+#include"main.h"
+#include"input_management.h"
+#include"setup.h"
+#include"shader.h"
+#include"texture.h"
+#include"camera.h"
+#include"particle.h"
+#include"debug_line.h"
 
 //#define debug
 #define fire

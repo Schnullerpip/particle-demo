@@ -6,7 +6,8 @@ project(particles-demo)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #include directories
-include_directories(include /home/julian/Programs/glfw-build/include)
+#include_directories(include /home/julian/Programs/glfw-build/include)
+include_directories(include/ include_other/)
 
 #wildcard source additions
 file(GLOB SOURCES "src/*.cpp")

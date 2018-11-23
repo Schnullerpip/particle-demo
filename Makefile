@@ -17,10 +17,7 @@ all: $(obj)
 	g++ $(obj) $(LDFLAGS) -o $(target) $(ccflags) && tree
 
 coop: $(csrc) $(ccsrc)
-	$(llvmBuild)/bin/coop $^ -- -i include && clang-format $^ $(DEPS) -i
-
-coopa: $(csrc) $(ccsrc)
-	$(llvmBuild)/bin/coop $^ -- -i include --analyze-only
+	$(llvmBuild)/bin/coop src/collision_detection.cpp src/input_management.cpp src/main.cpp src/particle.cpp src/setup.cpp src/Shader.cpp
 
 .PHONY: clean
 

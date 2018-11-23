@@ -1,4 +1,4 @@
-#include"../include/shader.h"
+#include"shader.h"
 
 Shader *currently_used_shader = nullptr;
 

@@ -1,4 +1,4 @@
-#include "../include/collision_detection.h"
+#include "collision_detection.h"
 
 namespace jule{
 

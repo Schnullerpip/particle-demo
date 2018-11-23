@@ -1,6 +1,6 @@
 #include"particle.h"
-#include"../include/collision_detection.h"
-#include"../include/main.h"
+#include"collision_detection.h"
+#include"main.h"
 
 std::vector<particle_system*> particle_system::particle_systems = {};
 
