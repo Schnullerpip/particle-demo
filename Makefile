@@ -3,7 +3,8 @@ ccsrc = $(wildcard src/*.cpp)
 obj = $(csrc:.c=.o) $(ccsrc:.cpp=.o)
 DEPS = include/*.h include/*.hpp
 
-LDFLAGS = -lglfw3 -lGL -lX11 -lXi -lXrandr -ldl -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread
+LDFLAGS = -lglfw3 -lX11 -lXrandr -ldl -lXxf86vm -lXinerama -lXcursor -pthread
+
 idir=-Iinclude -I/home/julian/Programs/glfw-build/include
 ccflags=-std=c++17 -Wall
 
