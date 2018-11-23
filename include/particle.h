@@ -31,11 +31,21 @@ struct particle
 
     float m_mass = 1.f;
 
+    float color[3] = {1.f, 0.6f, 0.3f};
+
     Shader *m_particle_shader = nullptr;
     Texture *m_particle_texture = nullptr;
 
-    explicit particle(float life, Shader *shader, Texture *texture) :m_immortal(NO), m_life(life), m_particle_shader(shader), m_particle_texture(texture) {}
-    explicit particle() :m_immortal(NO), m_life(10.f) {}
+    explicit particle(float life, Shader *shader, Texture *texture)
+        :m_immortal(NO),
+        m_life(life),
+        m_particle_shader(shader),
+        m_particle_texture(texture)
+        {}
+    explicit particle()
+        :m_immortal(NO),
+        m_life(10.f)
+        {}
 
     void update_position()
     {
@@ -74,7 +84,7 @@ struct particle_system
 
     particle *particles;
     //3f position, 1f life
-    float *particles_data; //[size*(3/*xyz*/+1/*life*/)];
+    float *particles_data; //[size*(3/*xyz*/+1/*life*/+3/*color*/)];
 
     particle_system(
         particle prototype,

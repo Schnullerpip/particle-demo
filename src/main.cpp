@@ -10,7 +10,8 @@
 #include"../include/debug_line.h"
 
 //#define debug
-//define fire
+#define fire
+#define canon
 
 namespace jule
 {
@@ -170,19 +171,23 @@ int main(){
     });
 #endif
 
+#ifdef canon
     constexpr float offset = 5.f;
     constexpr float spawn_radius = 1.f;
 
     constexpr float vel_factor= 5.f;
     constexpr int num_particles_per_gun = 1000;
     constexpr int particle_bulk_per_gun = 1;
-    constexpr float gun_shoot_rate = 0.1f;
+    constexpr float gun_shoot_rate = 0.05f;
+
+    constexpr yes_no internal_col_pol = NO;
+    constexpr yes_no global_col_pol = YES;
 
     particle collision_proto_particle(4.f, &collision_particle_shader, &particle_tex);
     collision_proto_particle.m_radius = .4f;
 
     //particle CANON 1
-    particle_system collision_system1(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    particle_system collision_system1(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, internal_col_pol, global_col_pol,
     [](){
         static glm::vec3 spawn_center(0.f, 0.f, -offset);
         static glm::vec3 spawn_tilt_x_axis = glm::normalize(glm::vec3(0.f, 1.f, -1.f));
@@ -198,7 +203,7 @@ int main(){
     [](){return glm::vec3(0.f, vel_factor, vel_factor);});
 
     //particle CANON 2
-    particle_system collision_system2(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    particle_system collision_system2(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, internal_col_pol, global_col_pol,
     [](){
         static glm::vec3 spawn_center(0.f, 0.f, offset);
         static glm::vec3 spawn_tilt_x_axis = glm::normalize(glm::vec3(0.f, 1.f, 1.f));
@@ -214,7 +219,7 @@ int main(){
     [](){return glm::vec3(0.f, vel_factor, -vel_factor);});
 
     //particle CANON 3
-    particle_system collision_system3(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    particle_system collision_system3(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, internal_col_pol, global_col_pol,
     [](){
         static glm::vec3 spawn_center(offset, 0.f, 0.f);
         static glm::vec3 spawn_tilt_z_axis = glm::normalize(glm::vec3(1.f, 1.f, 0.f));
@@ -230,7 +235,9 @@ int main(){
     [](){return glm::vec3(-vel_factor, vel_factor, 0.f);});
 
     //particle CANON 4
-    particle_system collision_system4(collision_proto_particle, num_particles_per_gun, particle_bulk_per_gun, gun_shoot_rate, NO, YES, 
+    collision_proto_particle.m_radius = 1.2f;
+    collision_proto_particle.m_mass = 9000.f;
+    particle_system collision_system4(collision_proto_particle, num_particles_per_gun, 1, 1.f, internal_col_pol, global_col_pol,
     [](){
         static glm::vec3 spawn_center(-offset, 0.f, 0.f);
         static glm::vec3 spawn_tilt_z_axis = glm::normalize(glm::vec3(-1.f, 1.f, 0.f));
@@ -243,7 +250,8 @@ int main(){
         return spawn_center + spawn_pos;
     },
     [](){return glm::vec3(0.f, 0.f, 0.f);},
-    [](){return glm::vec3(vel_factor, vel_factor, 0.f);});
+    [](){return glm::vec3(vel_factor*4, vel_factor*4, 0.f);});
+#endif 
 
 //GAMELOOP
 {
