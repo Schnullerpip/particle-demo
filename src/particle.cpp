@@ -54,8 +54,6 @@ void particle_system::particle_system_collision(particle_system *ps1, particle_s
             auto collision_data = jule::sphere_collision(p1.m_xyz, p1.m_radius, p2.m_xyz, p2.m_radius);
             if(collision_data.colliding)
             {
-                static unsigned long number_collisions = 0;
-                //printf("%lu collisions!\n", ++number_collisions);
                 collide(p1, p2, collision_data);
             }
         }

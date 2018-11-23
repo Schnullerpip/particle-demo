@@ -25,15 +25,16 @@ const collision_data sphere_collision(glm::vec3 pos1, float rad1, glm::vec3 pos2
 
         glm::vec3 collision_point = dir_to_collision_point_from_p2 * distance_to_collision_point_from_pos2;
 
-        return {
-        true,
-        collision_point,
-        dir_to_collision_point_from_p2 * -1.f,
-        dir_to_collision_point_from_p2,
-        distance_to_collision_point_from_pos1,
-        distance_to_collision_point_from_pos2,
-        diff
-        };
+        collision_data cd;
+        cd.colliding = true;
+        cd.collision_point = collision_point;
+        cd.dir_vec_from_p1_to_collision_point = dir_to_collision_point_from_p2 * -1.f;
+        cd.dir_vec_from_p2_to_collision_point = dir_to_collision_point_from_p2;
+        cd.distance_from_p1_to_collision_point = distance_to_collision_point_from_pos1;
+        cd.distance_from_p2_to_collision_point = distance_to_collision_point_from_pos2;
+        cd.merge_distance = diff;
+
+        return cd;
     }
 
     return {};
