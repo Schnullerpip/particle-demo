@@ -2,3 +2,5 @@
 particles.code-workspace
 src/.vscode/
 *.o
+particles-demo
+
