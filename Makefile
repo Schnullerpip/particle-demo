@@ -16,7 +16,7 @@ target=particles-demo
 all: $(obj)
 	g++ $(obj) $(LDFLAGS) -o $(target) $(ccflags) && tree
 
-coop: $(csrc) $(ccsrc)
+coop:
 	$(llvmBuild)/bin/coop
 
 r:
