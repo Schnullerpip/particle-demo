@@ -13,7 +13,7 @@ include-files camera.h collision_detection.h debug_line.h input_management.h mai
 
 
 #if this is set coop will not do any changes to the source files - only analyze
-analyze-only
+#analyze-only
 
 
 #if there are sources you would like to ignore list them here and uncomment the command. Should be a child of root folder - e.g. exclude-folders thirdPartySrc/
@@ -49,4 +49,4 @@ exclude-folders glfw-build src/stb-src
 
 
 #if set coop will ask for permission on EACH record when trying to optimize it
-#confirm-record-changes
+confirm-record-changes
