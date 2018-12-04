@@ -10,10 +10,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include/ include_other/)
 
 #wildcard source additions
-file(GLOB SOURCES "src/*.cpp")
+#file(GLOB SOURCES "src/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+#file(GLOB SOURCES "stb-src/*.cpp")
 
 #manually setting sources
-#set(SOURCES testit.cpp multi.cpp)
+#set(SOURCES "stb-src/stb_image.cpp")
 
 #compiler/linker flags
 set(GCC_COVERAGE_COMPILE_FLAGS "-std=c++11 -Wall")

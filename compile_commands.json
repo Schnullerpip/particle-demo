@@ -13,12 +13,6 @@
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/stb_image.cpp.o -c /home/julian/Programs/particles-demo/src/stb_image.cpp",
-  "file": "/home/julian/Programs/particles-demo/src/stb_image.cpp"
-},
-
-{
-  "directory": "/home/julian/Programs/particles-demo",
   "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/collision_detection.cpp.o -c /home/julian/Programs/particles-demo/src/collision_detection.cpp",
   "file": "/home/julian/Programs/particles-demo/src/collision_detection.cpp"
 },
@@ -33,6 +27,12 @@
   "directory": "/home/julian/Programs/particles-demo",
   "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/setup.cpp.o -c /home/julian/Programs/particles-demo/src/setup.cpp",
   "file": "/home/julian/Programs/particles-demo/src/setup.cpp"
+},
+
+{
+  "directory": "/home/julian/Programs/particles-demo",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/stb-src/stb_image.cpp.o -c /home/julian/Programs/particles-demo/src/stb-src/stb_image.cpp",
+  "file": "/home/julian/Programs/particles-demo/src/stb-src/stb_image.cpp"
 },
 
 {

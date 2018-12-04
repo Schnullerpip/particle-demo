@@ -22,4 +22,9 @@ coop: $(csrc) $(ccsrc)
 .PHONY: clean
 
 clean:
-	rm -rf src/*.o $(target); tree
+	rm -rf src/*.o $(target)
+	rm CMakeCache.txt
+	rm cmake_install.cmake
+	rm build.ninja
+	rm rules.ninja
+

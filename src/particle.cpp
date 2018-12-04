@@ -67,7 +67,8 @@ void particle_system::GlobalParticleCollisions()
         particle_system *ps1 = particle_systems[i];
         if(ps1->m_global_particle_collision == NO)
             continue;
-        for(unsigned o = i+1; o < particle_systems.size(); ++o)
+        unsigned o = i+1;
+        for(; o < particle_systems.size(); ++o)
         {
             particle_system *ps2 = particle_systems[o];
             if(ps2->m_global_particle_collision == NO)
