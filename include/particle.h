@@ -38,10 +38,11 @@ struct particle
 
     explicit particle(float life, Shader *shader, Texture *texture)
         :m_immortal(NO),
-        m_life(life),
-        m_particle_shader(shader),
-        m_particle_texture(texture)
-        {}
+        m_life(life)
+        {
+            m_particle_shader = shader;
+            m_particle_texture = texture;
+        }
     explicit particle()
         :m_immortal(NO),
         m_life(10.f)
