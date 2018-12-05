@@ -8,7 +8,6 @@ class Texture
 {
     const int width = 0, height = 0, nr_channels = 0;
     const unsigned int gl_texture_nr;
-    const char *path;
     const char *uniform_name;
     const unsigned int ID = 0;
 
