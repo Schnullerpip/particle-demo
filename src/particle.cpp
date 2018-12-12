@@ -256,6 +256,6 @@ void particle_system::reset_first_unused()
 
 particle_system::~particle_system()
 {
-    delete particles;
+    delete[] particles;
     delete particles_data;
 }
