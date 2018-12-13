@@ -28,7 +28,7 @@ exclude-folders glfw-build src/stb-src
 
 
 #this value determines the allocationsize, that is given any cold data freelist, that is created by coop
-#cold-size 1024
+#cold-size 2048
 
 
 
