@@ -47,14 +47,14 @@ void particle_system::particle_system_collision(particle_system *ps1, particle_s
 {
     for(unsigned i = 0; i < ps1->particles_alive; ++i)
     {
-        particle &p1 = ps1->particles[i];
+        particle *p1 = ps1->particles[i];
         for(unsigned o = (ps1 == ps2 ? i+1 : 0); o < ps2->particles_alive; ++o)
         {
-            particle &p2 = ps2->particles[o];
-            auto collision_data = jule::sphere_collision(p1.m_xyz, p1.m_radius, p2.m_xyz, p2.m_radius);
+            particle *p2 = ps2->particles[o];
+            auto collision_data = jule::sphere_collision(p1->m_xyz, p1->m_radius, p2->m_xyz, p2->m_radius);
             if(collision_data.colliding)
             {
-                collide(p1, p2, collision_data);
+                collide(*p1, *p2, collision_data);
             }
         }
     }
@@ -121,11 +121,12 @@ particle_system::particle_system(
     m_get_initial_acceleration(acc_func_ptr),
     m_get_initial_velocity(vel_func_ptr)
 {
-    particles = new particle[m_size];
+    particles = new particle*[m_size];
     for(size_t i = 0; i < m_size; ++i)
     {
         //TODO make this worse by having an array of particle* and getting each individual with new
-        reset_particle(&particles[i], dead);
+        particles[i] = new particle(m_prototype);
+        reset_particle(particles[i], dead);
     }
 
     particles_data = new float[m_size*(stride)];
@@ -171,41 +172,41 @@ void particle_system::update_particles()
 
     for(size_t s = 0; s < m_size; ++s)
     {
-        particle &p = particles[s];
+        particle *p = particles[s];
 
-        p.update_position();
+        p->update_position();
 
-        if((p.m_life -= delta_time) > 0.f)
+        if((p->m_life -= delta_time) > 0.f)
         {
             ++particles_alive;
         }
     }
 
     //sort out dead particles
-    std::sort(particles, particles+m_size, [](particle &p1, particle &p2){
-        return p1.m_life > p2.m_life;});
+    std::sort(particles, particles+m_size, [](particle *p1, particle *p2){
+        return p1->m_life > p2->m_life;});
 
 }
 
 void particle_system::render_particles(glm::vec3 camera_position)
 {
     //sort alive particles in correct order for camera (so blending is right)
-    std::sort(particles, particles+particles_alive, [&](particle &p1, particle &p2){
-        return  glm::length2(camera_position-p1.m_xyz) > glm::length2(camera_position-p2.m_xyz);
+    std::sort(particles, particles+particles_alive, [&](particle *p1, particle *p2){
+        return  glm::length2(camera_position-p1->m_xyz) > glm::length2(camera_position-p2->m_xyz);
     });
 
     for(size_t s = 0; s < particles_alive; ++s)
     {
-        particle &p = particles[s];
+        particle *p = particles[s];
 
         size_t offset = s * stride;
-        particles_data[offset + x] = p.m_xyz.x;
-        particles_data[offset + y] = p.m_xyz.y;
-        particles_data[offset + z] = p.m_xyz.z;
-        particles_data[offset + life] = p.m_life;
-        particles_data[offset + r] = p.m_color[0];
-        particles_data[offset + g] = p.m_color[1];
-        particles_data[offset + b] = p.m_color[2];
+        particles_data[offset + x] = p->m_xyz.x;
+        particles_data[offset + y] = p->m_xyz.y;
+        particles_data[offset + z] = p->m_xyz.z;
+        particles_data[offset + life] = p->m_life;
+        particles_data[offset + r] = p->m_color[0];
+        particles_data[offset + g] = p->m_color[1];
+        particles_data[offset + b] = p->m_color[2];
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -234,7 +235,7 @@ void particle_system::reset_first_unused()
     static unsigned int last_found = 0;
     for(unsigned int i = last_found; i < m_size; ++i)
     {
-        particle &p = particles[i];
+        particle &p = *particles[i];
         if((p.m_immortal == NO) && (p.m_life < 0.f))
         {
             last_found = i;
@@ -244,7 +245,7 @@ void particle_system::reset_first_unused()
     }
     for(unsigned int i = 0; i < last_found; ++i)
     {
-        particle &p = particles[i];
+        particle &p = *particles[i];
         if((p.m_immortal == NO) && (p.m_life < 0.f))
         {
             last_found = i;
@@ -256,6 +257,10 @@ void particle_system::reset_first_unused()
 
 particle_system::~particle_system()
 {
+    for(size_t i = 0; i < m_size; ++i)
+    {
+        delete particles[i];
+    }
     delete[] particles;
     delete particles_data;
 }

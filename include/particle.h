@@ -36,17 +36,34 @@ struct particle
     Shader *m_particle_shader = nullptr;
     Texture *m_particle_texture = nullptr;
 
-    explicit particle(float life, Shader *shader, Texture *texture)
+    particle(float life, Shader *shader, Texture *texture)
         :m_immortal(NO),
         m_life(life)
         {
             m_particle_shader = shader;
             m_particle_texture = texture;
         }
-    explicit particle()
+    particle()
         :m_immortal(NO),
         m_life(10.f)
         {}
+    
+    particle(const particle & other)
+    {
+        if(this != &other)
+        {
+            m_xyz = other.m_xyz;
+            m_acc = other.m_acc;
+            m_vel = other.m_vel;
+            m_immortal = other.m_immortal;
+            m_life = other.m_life;
+            m_radius = other.m_radius;
+            m_mass = other.m_mass;
+            memcpy(m_color, other.m_color, 3 * sizeof(float));
+            m_particle_shader = other.m_particle_shader;
+            m_particle_texture = other.m_particle_texture;
+        }
+    }
 
     void update_position()
     {
@@ -83,7 +100,7 @@ struct particle_system
     glm::vec3 (*m_get_initial_acceleration)();
     glm::vec3 (*m_get_initial_velocity)();
 
-    particle *particles;
+    particle **particles;
     //3f position, 1f life
     float *particles_data; //[size*(3/*xyz*/+1/*life*/+3/*color*/)];
 
