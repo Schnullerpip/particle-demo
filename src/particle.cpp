@@ -110,17 +110,17 @@ particle_system::particle_system(
     glm::vec3 (*spawn_position)(),
     glm::vec3 (*acc_func_ptr)(),
     glm::vec3 (*vel_func_ptr)())
-
-    :m_prototype(prototype),
-    m_size(size),
-    m_bulk(bulk),
-    m_rate(rate_in_seconds),
-    m_intern_particle_collision(intern_particle_collision),
-    m_global_particle_collision(global_particle_collision),
-    m_get_spawn_position(spawn_position),
-    m_get_initial_acceleration(acc_func_ptr),
-    m_get_initial_velocity(vel_func_ptr)
 {
+    m_prototype = prototype;
+    m_size = size;
+    m_bulk = bulk;
+    m_rate = rate_in_seconds;
+    m_intern_particle_collision = intern_particle_collision;
+    m_global_particle_collision = global_particle_collision;
+    m_get_spawn_position = spawn_position;
+    m_get_initial_acceleration = acc_func_ptr;
+    m_get_initial_velocity = vel_func_ptr;
+
     particles = new particle*[m_size];
     for(size_t i = 0; i < m_size; ++i)
     {
