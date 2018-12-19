@@ -35,10 +35,21 @@ void collide(particle &p1, particle &p2, collision_data &collision_data)
     p1.m_vel =new_vel_p1;
     p2.m_vel =new_vel_p2;
 
-    //the particles are probably inside each other - move them back accordingly
+    // the particles are probably inside each other - move them back accordingly
+    //or better check which particle has the greater force and then move the weak one!
+    float p1_force = glm::length(p1.m_vel) * p1.m_mass;
+    float p2_force = glm::length(p2.m_vel) * p2.m_mass;
+
     float correction = collision_data.merge_distance;
-    p1.m_xyz += collision_data.dir_vec_from_p2_to_collision_point * (correction + jule::EPSILON);
-    p2.m_xyz += collision_data.dir_vec_from_p1_to_collision_point * (correction + jule::EPSILON);
+    if(p1_force < p2_force)
+    {
+        p1.m_xyz += collision_data.dir_vec_from_p2_to_collision_point *
+                    (correction + jule::EPSILON);
+    }else{
+        p2.m_xyz += collision_data.dir_vec_from_p1_to_collision_point *
+                    (correction + jule::EPSILON);
+    }
+
 }
 
 
