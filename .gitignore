@@ -14,3 +14,4 @@ rules.ninja
 glfw-build/*
 coop_config.txt
 include/free_list_template.hpp
+build/
