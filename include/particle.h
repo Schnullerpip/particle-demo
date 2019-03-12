@@ -47,23 +47,6 @@ struct particle
         :m_immortal(NO),
         m_life(10.f)
         {}
-    
-    particle(const particle & other)
-    {
-        if(this != &other)
-        {
-            m_xyz = other.m_xyz;
-            m_acc = other.m_acc;
-            m_vel = other.m_vel;
-            m_immortal = other.m_immortal;
-            m_life = other.m_life;
-            m_radius = other.m_radius;
-            m_mass = other.m_mass;
-            memcpy(m_color, other.m_color, 3 * sizeof(float));
-            m_particle_shader = other.m_particle_shader;
-            m_particle_texture = other.m_particle_texture;
-        }
-    }
 
     void update_position()
     {
