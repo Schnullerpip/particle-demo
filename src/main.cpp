@@ -33,6 +33,7 @@ void print_vec(glm::vec3 &v)
 }
 
 int main(){
+    printf("sizeof particle: %lu\n", sizeof(particle));
     srand(static_cast<unsigned>(time(0)));
 
 
@@ -261,7 +262,9 @@ int main(){
     float last_frame = 0.0f;
     jule::running = true;
 
-    while(!glfwWindowShouldClose(jule::window))
+    unsigned count = 0;
+    constexpr unsigned max = 400;
+    while(!glfwWindowShouldClose(jule::window) && (count++ < max))
     {
         float current_frame = glfwGetTime();
         jule::delta_time = current_frame - last_frame;

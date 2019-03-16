@@ -36,6 +36,8 @@ struct particle
     Shader *m_particle_shader = nullptr;
     Texture *m_particle_texture = nullptr;
 
+    char pad[112];
+
     particle(float life, Shader *shader, Texture *texture)
         :m_immortal(NO),
         m_life(life)
