@@ -13,30 +13,16 @@ enum PARTICLE_ATTRIB {x, y, z, life, r, g, b};
 
 struct particle
 {
-    //position
     glm::vec3 m_xyz = glm::vec3(0.f, 0.f, 0.f);
-
-    //acceleration
-    glm::vec3 m_acc = glm::vec3(0.f, 0.f, 0.f);
-
-    //velocity
-    glm::vec3 m_vel = glm::vec3(0.f, 0.f, 0.f);
-
-    yes_no m_immortal = NO;
-
-    //in seconds
-    float m_life;
-
-    float m_radius = 1.f;
-
-    float m_mass = 1.f;
-
-    float m_color[3] = {1.f, 0.6f, 0.3f};
-
     Shader *m_particle_shader = nullptr;
     Texture *m_particle_texture = nullptr;
-
-    //char pad[112];
+    glm::vec3 m_acc = glm::vec3(0.f, 0.f, 0.f);
+    glm::vec3 m_vel = glm::vec3(0.f, 0.f, 0.f);
+    yes_no m_immortal = NO;
+    float m_life;
+    float m_radius = 1.f;
+    float m_mass = 1.f;
+    float m_color[3] = {1.f, 0.6f, 0.3f};
 
     particle(float life, Shader *shader, Texture *texture)
         :m_immortal(NO),
