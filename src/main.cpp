@@ -59,7 +59,7 @@ void measurements::end()
     delta_time_avg /= delta_times.size();
 
     std::cout << "measured range: " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time_stamp - start_time_stamp).count()
-              << " ms\ndelta time avg: " << delta_time_avg << "\nframes: " << delta_times.size();
+              << " ms\ndelta time avg: " << delta_time_avg << "\nframes: " << delta_times.size() << "\n";
 
     file.close();
 }

@@ -5,6 +5,9 @@ project(particles-demo)
 #so the compile_commands.json is generated
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+#so we ubild in debug/release mode
+set(CMAKE_BUILD_TYPE "Release")
+
 #include directories
 #include_directories(include /home/julian/Programs/glfw-build/include)
 include_directories(include/ include_other/)

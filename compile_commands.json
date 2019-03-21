@@ -1,127 +1,127 @@
 [
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/main.cpp.o -c /home/julian/Programs/particles-demo/src/main.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/main.cpp.o -c /home/julian/Programs/particles-demo/src/main.cpp",
   "file": "/home/julian/Programs/particles-demo/src/main.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/input_management.cpp.o -c /home/julian/Programs/particles-demo/src/input_management.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/input_management.cpp.o -c /home/julian/Programs/particles-demo/src/input_management.cpp",
   "file": "/home/julian/Programs/particles-demo/src/input_management.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/collision_detection.cpp.o -c /home/julian/Programs/particles-demo/src/collision_detection.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/collision_detection.cpp.o -c /home/julian/Programs/particles-demo/src/collision_detection.cpp",
   "file": "/home/julian/Programs/particles-demo/src/collision_detection.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/particle.cpp.o -c /home/julian/Programs/particles-demo/src/particle.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/particle.cpp.o -c /home/julian/Programs/particles-demo/src/particle.cpp",
   "file": "/home/julian/Programs/particles-demo/src/particle.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/setup.cpp.o -c /home/julian/Programs/particles-demo/src/setup.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/setup.cpp.o -c /home/julian/Programs/particles-demo/src/setup.cpp",
   "file": "/home/julian/Programs/particles-demo/src/setup.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/stb-src/stb_image.cpp.o -c /home/julian/Programs/particles-demo/src/stb-src/stb_image.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/stb-src/stb_image.cpp.o -c /home/julian/Programs/particles-demo/src/stb-src/stb_image.cpp",
   "file": "/home/julian/Programs/particles-demo/src/stb-src/stb_image.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/glad.cpp.o -c /home/julian/Programs/particles-demo/src/glad.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/glad.cpp.o -c /home/julian/Programs/particles-demo/src/glad.cpp",
   "file": "/home/julian/Programs/particles-demo/src/glad.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall   -o CMakeFiles/particles-demo.dir/src/Shader.cpp.o -c /home/julian/Programs/particles-demo/src/Shader.cpp",
+  "command": "/usr/bin/c++    -Iinclude -Iinclude_other -Iparticles-demo   -std=c++11 -Wall -O3 -DNDEBUG   -o CMakeFiles/particles-demo.dir/src/Shader.cpp.o -c /home/julian/Programs/particles-demo/src/Shader.cpp",
   "file": "/home/julian/Programs/particles-demo/src/Shader.cpp"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/context.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/context.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/context.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/context.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/context.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/init.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/init.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/init.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/init.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/init.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/input.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/input.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/input.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/input.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/input.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/monitor.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/monitor.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/monitor.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/monitor.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/monitor.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/window.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/window.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/window.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/window.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/window.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/x11_init.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/x11_init.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/x11_init.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/x11_init.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/x11_init.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/x11_monitor.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/x11_monitor.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/x11_monitor.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/x11_monitor.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/x11_monitor.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/x11_window.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/x11_window.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/x11_window.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/x11_window.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/x11_window.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/xkb_unicode.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/xkb_unicode.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/xkb_unicode.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/xkb_unicode.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/xkb_unicode.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/linux_joystick.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/linux_joystick.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/linux_joystick.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/linux_joystick.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/linux_joystick.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/posix_time.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/posix_time.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/posix_time.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/posix_time.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/posix_time.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/posix_tls.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/posix_tls.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/posix_tls.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/posix_tls.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/posix_tls.c"
 },
 
 {
   "directory": "/home/julian/Programs/particles-demo",
-  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/glx_context.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/glx_context.c",
+  "command": "/usr/bin/cc  -D_GLFW_USE_CONFIG_H -Iinclude -Iinclude_other -Iglfw-build/src  -O3 -DNDEBUG -fPIC   -Wall -o glfw-build/src/CMakeFiles/glfw.dir/glx_context.c.o   -c /home/julian/Programs/particles-demo/glfw-build/src/glx_context.c",
   "file": "/home/julian/Programs/particles-demo/glfw-build/src/glx_context.c"
 }
 ]
