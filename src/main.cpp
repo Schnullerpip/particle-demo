@@ -317,7 +317,7 @@ int main(){
     jule::running = true;
 
     unsigned count = 0;
-    constexpr unsigned max = 400;
+    constexpr unsigned max = 200;
     measurements measure(max);
     measure.start();
     while(!glfwWindowShouldClose(jule::window) && (count++ < max))
