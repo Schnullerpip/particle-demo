@@ -11,7 +11,7 @@
 #include"debug_line.h"
 
 //#define debug
-#define fire
+//#define fire
 #define canon
 
 struct measurements {
@@ -231,9 +231,9 @@ int main(){
     constexpr float spawn_radius = 1.f;
 
     constexpr float vel_factor= 5.f;
-    constexpr int num_particles_per_gun = 10000;
-    constexpr int particle_bulk_per_gun = 20;
-    constexpr float gun_shoot_rate = 0.02f;
+    constexpr int num_particles_per_gun = 100000;
+    constexpr int particle_bulk_per_gun = 30;
+    constexpr float gun_shoot_rate = 0.01f;
 
     constexpr yes_no internal_col_pol = NO;
     constexpr yes_no global_col_pol = YES;
@@ -293,7 +293,7 @@ int main(){
 
     //particle CANON 4
     memcpy(collision_proto_particle.m_color, jule::GREEN, 3 * sizeof(float));
-    collision_proto_particle.m_radius = 1.2f;
+    collision_proto_particle.m_radius = 2.2f;
     collision_proto_particle.m_mass = 9000.f;
     particle_system collision_system4(collision_proto_particle, num_particles_per_gun, 1, 1.f, internal_col_pol, global_col_pol,
     [](){
