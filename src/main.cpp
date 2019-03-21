@@ -231,9 +231,9 @@ int main(){
     constexpr float spawn_radius = 1.f;
 
     constexpr float vel_factor= 5.f;
-    constexpr int num_particles_per_gun = 1000;
-    constexpr int particle_bulk_per_gun = 1;
-    constexpr float gun_shoot_rate = 0.05f;
+    constexpr int num_particles_per_gun = 10000;
+    constexpr int particle_bulk_per_gun = 20;
+    constexpr float gun_shoot_rate = 0.02f;
 
     constexpr yes_no internal_col_pol = NO;
     constexpr yes_no global_col_pol = YES;
@@ -325,6 +325,8 @@ int main(){
         float current_frame = glfwGetTime();
         jule::delta_time = current_frame - last_frame;
         last_frame = current_frame;
+
+        measure.update();
 
         // rendering commands 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
