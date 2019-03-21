@@ -1,4 +1,5 @@
 #include<cmath>
+#include<chrono>
 
 #include"main.h"
 #include"input_management.h"
@@ -12,6 +13,59 @@
 //#define debug
 #define fire
 #define canon
+
+struct measurements {
+    measurements(unsigned max_frames);
+    ~measurements();
+    void start();
+    void end();
+    void update();
+
+    std::vector<float> delta_times;
+    std::chrono::steady_clock::time_point start_time_stamp;
+    std::chrono::steady_clock::time_point end_time_stamp;
+};
+measurements::measurements(unsigned max_frames)
+{
+    delta_times.reserve(max_frames > 0 ? max_frames : 10000);
+}
+void measurements::update()
+{
+    delta_times.push_back(jule::delta_time);
+}
+void measurements::start()
+{
+    start_time_stamp = std::chrono::steady_clock::now();
+}
+void measurements::end()
+{
+    end_time_stamp = std::chrono::steady_clock::now();
+    std::time_t t = std::time(0);
+    std::tm *now = std::localtime(&t);
+
+    std::stringstream ss;
+    ss << "delta_times_over_" << delta_times.size() << "_frames_" <<
+        now->tm_hour << ":" << now->tm_min << ".csv";
+
+    std::string file_name = ss.str();
+    std::ofstream file;
+    file.open(file_name);
+    file << "frame#delta_times";
+    float delta_time_avg = 0;
+    for(unsigned i = 0; i < delta_times.size(); ++i){
+        delta_time_avg += delta_times[i];
+        file << "\n" << i << "#" << delta_times[i];
+    }
+    delta_time_avg /= delta_times.size();
+
+    std::cout << "measured range: " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time_stamp - start_time_stamp).count()
+              << " ms\ndelta time avg: " << delta_time_avg << "\nframes: " << delta_times.size();
+
+    file.close();
+}
+measurements::~measurements()
+{
+}
 
 namespace jule
 {
@@ -264,6 +318,8 @@ int main(){
 
     unsigned count = 0;
     constexpr unsigned max = 400;
+    measurements measure(max);
+    measure.start();
     while(!glfwWindowShouldClose(jule::window) && (count++ < max))
     {
         float current_frame = glfwGetTime();
@@ -340,6 +396,7 @@ int main(){
         glfwPollEvents();
         glfwSwapBuffers(jule::window);
     }
+    measure.end();
 }
 
     glfwTerminate();
