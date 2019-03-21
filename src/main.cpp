@@ -373,7 +373,7 @@ int main(){
             //radius info
             s->setFloat("particle_radius", prototype.m_radius);
             //texture usage
-            s->set_texture_uniform_data(prototype.m_particle_texture);
+            s->set_texture_uniform_data(&prototype.m_particle_texture);
             //transform usage
             s->setMatrix4f("u_projection", &projection);
             s->setMatrix4f("u_view", &view);

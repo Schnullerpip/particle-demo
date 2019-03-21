@@ -6,10 +6,10 @@
 
 class Texture
 {
-    const int width = 0, height = 0, nr_channels = 0;
-    const unsigned int gl_texture_nr;
-    const char *uniform_name;
-    const unsigned int ID = 0;
+    int width = 0, height = 0, nr_channels = 0;
+    unsigned int gl_texture_nr = 0;
+    char *uniform_name = nullptr;
+    unsigned int ID = 0;
 
 public:
     unsigned int get_id() const
@@ -27,9 +27,13 @@ public:
         return gl_texture_nr;
     }
 
+    Texture(){}
+
+    Texture & operator=(const Texture &other) = default;
+
     Texture(
         const char *path_to_file,
-        const char *name,
+        char *name,
         unsigned int gl_rgb_mode = GL_RGBA,
         unsigned int gl_texture_nr = 0)
 

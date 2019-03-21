@@ -16,7 +16,7 @@ struct particle
     glm::vec3 m_xyz = glm::vec3(0.f, 0.f, 0.f);
     //int pad[100];
     Shader *m_particle_shader = nullptr;
-    Texture *m_particle_texture = nullptr;
+    Texture m_particle_texture;
     glm::vec3 m_acc = glm::vec3(0.f, 0.f, 0.f);
     glm::vec3 m_vel = glm::vec3(0.f, 0.f, 0.f);
     yes_no m_immortal = NO;
@@ -30,7 +30,7 @@ struct particle
         m_life(life)
         {
             m_particle_shader = shader;
-            m_particle_texture = texture;
+            m_particle_texture = *texture;
         }
     particle()
         :m_immortal(NO),
