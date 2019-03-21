@@ -231,7 +231,7 @@ int main(){
     constexpr float spawn_radius = 1.f;
 
     constexpr float vel_factor= 5.f;
-    constexpr int num_particles_per_gun = 100000;
+    constexpr int num_particles_per_gun = 10000;
     constexpr int particle_bulk_per_gun = 30;
     constexpr float gun_shoot_rate = 0.01f;
 
@@ -317,7 +317,7 @@ int main(){
     jule::running = true;
 
     unsigned count = 0;
-    constexpr unsigned max = 200;
+    constexpr unsigned max = 1000;
     measurements measure(max);
     measure.start();
     while(!glfwWindowShouldClose(jule::window) && (count++ < max))

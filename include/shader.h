@@ -78,6 +78,7 @@ class Shader
 {
 public:
     unsigned int ID;
+    int pad[4];
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
     Shader(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr)
