@@ -10,7 +10,6 @@ class Texture
     const unsigned int gl_texture_nr;
     const char *uniform_name;
     const unsigned int ID = 0;
-    int pad[4];
 
 public:
     unsigned int get_id() const
