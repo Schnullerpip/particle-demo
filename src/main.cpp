@@ -365,7 +365,7 @@ int main(){
         for(auto ps : particle_system::particle_systems)
         {
             particle &prototype = ps->m_prototype;
-            Shader *s = prototype.m_particle_shader;
+            Shader *s = &prototype.m_particle_shader;
 
             ps->use();
             //life info
