@@ -50,11 +50,11 @@ void measurements::end()
     std::string file_name = ss.str();
     std::ofstream file;
     file.open(file_name);
-    file << "frame#delta_times";
+    file << "delta_times";
     float delta_time_avg = 0;
     for(unsigned i = 0; i < delta_times.size(); ++i){
         delta_time_avg += delta_times[i];
-        file << "\n" << i << "#" << delta_times[i];
+        file << "\n" << delta_times[i];
     }
     delta_time_avg /= delta_times.size();
 
