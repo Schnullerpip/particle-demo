@@ -231,8 +231,8 @@ int main(){
     constexpr float spawn_radius = 1.f;
 
     constexpr float vel_factor= 5.f;
-    constexpr int num_particles_per_gun = 40100;
-    constexpr int particle_bulk_per_gun = 100;
+    constexpr int num_particles_per_gun = 4000;
+    constexpr int particle_bulk_per_gun = 40;
     constexpr float gun_shoot_rate = 0.01f;
 
     constexpr yes_no internal_col_pol = YES;
