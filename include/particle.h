@@ -17,12 +17,12 @@ struct particle
     //int pad[100];
     Shader m_particle_shader;
     Texture m_particle_texture;
-    glm::vec3 m_acc = glm::vec3(0.f, 0.f, 0.f);
     glm::vec3 m_vel = glm::vec3(0.f, 0.f, 0.f);
     yes_no m_immortal = NO;
     float m_life;
     float m_radius = 1.f;
     float m_mass = 1.f;
+    glm::vec3 m_acc = glm::vec3(0.f, 0.f, 0.f);
     float m_color[3] = {1.f, 0.6f, 0.3f};
 
     particle(float life, Shader *shader, Texture *texture)
