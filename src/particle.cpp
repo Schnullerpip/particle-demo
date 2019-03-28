@@ -49,7 +49,6 @@ void collide(particle &p1, particle &p2, collision_data &collision_data)
         p2.m_xyz += collision_data.dir_vec_from_p1_to_collision_point *
                     (correction + jule::EPSILON);
     }
-
 }
 
 
