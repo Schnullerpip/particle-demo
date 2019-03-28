@@ -14,7 +14,7 @@ enum PARTICLE_ATTRIB {x, y, z, life, r, g, b};
 struct particle
 {
     glm::vec3 m_xyz = glm::vec3(0.f, 0.f, 0.f);
-    int pad[100];
+    //int pad[100];
     Shader m_particle_shader;
     Texture m_particle_texture;
     glm::vec3 m_vel = glm::vec3(0.f, 0.f, 0.f);
