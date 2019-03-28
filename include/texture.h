@@ -10,6 +10,7 @@ class Texture
     unsigned int gl_texture_nr = 0;
     char *uniform_name = nullptr;
     unsigned int ID = 0;
+    int pad[10];
 
 public:
     unsigned int get_id() const

@@ -78,7 +78,7 @@ class Shader
 {
 public:
     unsigned int ID;
-    int pad[2];
+    int pad[10];
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
     Shader() = default;
