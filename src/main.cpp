@@ -231,14 +231,14 @@ int main(){
     constexpr float spawn_radius = 1.f;
 
     constexpr float vel_factor= 5.f;
-    constexpr int num_particles_per_gun = 20000;
+    constexpr int num_particles_per_gun = 200000;
     constexpr int particle_bulk_per_gun = 40;
     constexpr float gun_shoot_rate = 0.01f;
 
     constexpr yes_no internal_col_pol = YES;
     constexpr yes_no global_col_pol = YES;
 
-    particle collision_proto_particle(4.f, &collision_particle_shader, &particle_tex);
+    particle collision_proto_particle(6.f, &collision_particle_shader, &particle_tex);
     collision_proto_particle.m_radius = .4f;
 
     //particle CANON 1
