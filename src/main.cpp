@@ -235,7 +235,7 @@ int main(){
     constexpr int particle_bulk_per_gun = 40;
     constexpr float gun_shoot_rate = 0.01f;
 
-    constexpr yes_no internal_col_pol = YES;
+    constexpr yes_no internal_col_pol = NO;
     constexpr yes_no global_col_pol = YES;
 
     particle collision_proto_particle(6.f, &collision_particle_shader, &particle_tex);
