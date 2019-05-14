@@ -392,12 +392,12 @@ int main(){
 #ifdef debug
             for(unsigned i = 0; i < ps->NumberParticlesAlive(); ++i)
             {
-                particle &p = ps->particles[i];
-                glm::vec3 v1 = p.m_xyz;
+                particle *p = ps->particles[i];
+                glm::vec3 v1 = p->m_xyz;
                 glm::vec3 v2 = v1;
 
                 v1.z += 0.1f;
-                v2.x += p.m_radius;
+                v2.x += p->m_radius;
                 v2.z += 0.1f;
 
                 draw_line(v1, v2, line_shader, view, projection);
