@@ -10,6 +10,7 @@
 #include"particle.h"
 #include"debug_line.h"
 
+//#define measure
 //#define debug
 //#define fire
 #define canon
@@ -231,9 +232,9 @@ int main(){
     constexpr float spawn_radius = 1.f;
 
     constexpr float vel_factor= 5.f;
-    constexpr int num_particles_per_gun = 24000;
-    constexpr int particle_bulk_per_gun = 40;
-    constexpr float gun_shoot_rate = 0.01f;
+    constexpr int num_particles_per_gun = 1000;
+    constexpr int particle_bulk_per_gun = 4;
+    constexpr float gun_shoot_rate = 0.1f;
 
     constexpr yes_no internal_col_pol = NO;
     constexpr yes_no global_col_pol = YES;
@@ -316,17 +317,26 @@ int main(){
     float last_frame = 0.0f;
     jule::running = true;
 
+#ifdef measure
     unsigned count = 0;
     constexpr unsigned max = 200;
     measurements measure(max);
     measure.start();
-    while(!glfwWindowShouldClose(jule::window) && (count++ < max))
+#endif
+
+
+    while(!glfwWindowShouldClose(jule::window))
     {
         float current_frame = glfwGetTime();
         jule::delta_time = current_frame - last_frame;
         last_frame = current_frame;
 
+#ifdef measure
+        if(count > max)
+            break;
+        count++;
         measure.update();
+#endif
 
         // rendering commands 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -398,7 +408,9 @@ int main(){
         glfwPollEvents();
         glfwSwapBuffers(jule::window);
     }
+#ifdef measure
     measure.end();
+#endif
 }
 
     glfwTerminate();
